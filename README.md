@@ -7,8 +7,3 @@ In addition, I get along with along with my partner well.
 
 Ruben Estrada
 I am able to git
-
-Adding new lines to test collaborating in a file and fixing misspelling. 
-
-This is a test to get more familiar with how to collaborate over git
-
