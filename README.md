@@ -7,3 +7,6 @@ In addition, I get along with along with my partner well.
 
 Ruben Estrada
 I am able to git
+
+
+This is a test to get more familiar with how to collaborate over git
