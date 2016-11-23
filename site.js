@@ -14,10 +14,16 @@ $.noConflict();
             $("#primary").empty(); //Empties out the #primary article
             var res_length = data.annotations.length; //Gets the length of the annotations
             if(res_length > 0) { 
+              var label; //Temp_location of labels
+              var u = {}; //Labels seen
               for(var i=0;i<res_length;i++) {
-                $('#primary').append(
-                  '<p>'+data.annotations[i].label+'</p>'
-                );
+                label = data.annotations[i].label;
+                if(!u.hasOwnProperty(label)) {
+                  $('#primary').append(
+                  '<p>'+label+'</p>'
+                  );
+                  u[label] = 1;
+                }
               }
             }
             else {
