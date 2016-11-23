@@ -11,6 +11,7 @@ $.noConflict();
         type: 'GET',
         url: query,
         success: function(data) {
+            $("#primary").empty(); //Empties out the #primary article
             var res_length = data.annotations.length; //Gets the length of the annotations
             if(res_length > 0) { 
               for(var i=0;i<res_length;i++) {
