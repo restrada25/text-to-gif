@@ -2,24 +2,19 @@ $.noConflict();
 (function($) {
   $(document).ready(function() {
      $('#uc-form').on('submit', function(e) {
-      var user = 'uClassify';
-      var classifier = 'Sentiment';
-      var t = 'q8jd8INyT27D';
+      var tkn = '68b2621e05c8479086e984a98ea8e716';
       var text = $('#uc-text').val();
-      //var query = 'https://api.uclassify.com/v1/'+user+'/'+classifier+'/classify/?readKey='+t+'&text='+text;
-      var query = 'https://api.uclassify.com/v1/uClassify/Sentiment/classify/?readKey=q8jd8INyT27D&text=happy';
+      var query = 'https://api.dandelion.eu/datatxt/nex/v1/?text='+text+'&token='+tkn+'&lang=en';
 
       $.ajax({
         type: 'GET',
-        dataType: 'json',
         url: query,
         success: function(data) {
-            $('#primary').append(
-             '<p>Positive: '+data.positive+' Negative: '+data.negative+'</p>'
-            );
+            console.log(data);
           }
      });
-
+     
+      console.log(query);
       e.preventDefault();
     });
   });
