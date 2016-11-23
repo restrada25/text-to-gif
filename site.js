@@ -2,8 +2,9 @@ $.noConflict();
 (function($) {
   $(document).ready(function() {
      $('#uc-form').on('submit', function(e) {
-      var tkn = '68b2621e05c8479086e984a98ea8e716'; //This is the dandelion token
-      var text = ($('#uc-text').val()).replace(/ /g, "%20");//Replaces all the spaces with '%20'
+      var tkn = '68b2621e05c8479086e984a98ea8e716'; //This is the Dandelion token
+      var text = ($('#uc-text').val()).replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");//Eliminates punctuation
+      text = text.replace(/ /g, "%20");//Replaces spaces with %20
       var query = 'https://api.dandelion.eu/datatxt/nex/v1/?text='+text+'&token='+tkn+'&lang=en';
 
       $.ajax({
@@ -25,7 +26,6 @@ $.noConflict();
             }
           }
      });
-     
       e.preventDefault();
     });
   });
