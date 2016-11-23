@@ -17,12 +17,12 @@ $.noConflict();
               var label; //Temp_location of labels
               var u = {}; //Labels seen
               for(var i=0;i<res_length;i++) {
-                label = data.annotations[i].label;
-                if(!u.hasOwnProperty(label)) {
-                  $('#primary').append(
+                label = data.annotations[i].label; //Storing next available label
+                if(!u.hasOwnProperty(label)) { //Check if the label has already been seen
+                  $('#primary').append(   //Adds the label to the DOM
                   '<p>'+label+'</p>'
                   );
-                  u[label] = 1;
+                  u[label] = 1; //Marks label as seen
                 }
               }
             }
