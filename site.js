@@ -6,7 +6,7 @@ $.noConflict();
       var text = ($('#uc-text').val()).replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");//Eliminates punctuation
       text = text.replace(/ /g, "%20");//Replaces spaces with %20
       var query = 'https://api.dandelion.eu/datatxt/nex/v1/?text='+text+'&token='+tkn+'&lang=en';
-
+      var unique_labels=[];
       $.ajax({
         type: 'GET',
         url: query,
@@ -19,6 +19,7 @@ $.noConflict();
               for(var i=0;i<res_length;i++) {
                 label = data.annotations[i].label; //Storing next available label
                 if(!u.hasOwnProperty(label)) { //Check if the label has already been seen
+                  unique_labels.push(label);
                   $('#primary').append(   //Adds the label to the DOM
                   '<p>'+label+'</p>'
                   );
@@ -33,6 +34,8 @@ $.noConflict();
             }
           }
      });
+
+      
       e.preventDefault();
     });
   });
