@@ -15,3 +15,8 @@ h1 {
   font-size: 2.779em; /* 50.02px / 18px */
   line-height: 1.1em; /* 55px / 50.02px (2.5 gridlines) */
 }
+
+img {
+  display: block;
+  max-width: 100%;
+}
