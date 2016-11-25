@@ -1,3 +1,5 @@
+//Dandelion API docs https://dandelion.eu/docs/api/
+//GIF API docs https://api.riffsy.com/#start
 $.noConflict();
 (function($) {
   $(document).ready(function() {
