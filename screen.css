@@ -20,3 +20,8 @@ img {
   display: block;
   max-width: 100%;
 }
+
+label,
+input {
+  display: block;
+}
