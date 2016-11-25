@@ -28,35 +28,18 @@ $.noConflict();
               }
             }
             else {
-              $('#primary').append(
-                '<p>Sorry, nothing to display</p>'
-              );
+              add_to_DOM('Sorry, nothing');
             }
           }
       }); 
 
-      // var add_to_DOM = function (lbl) {
-      //   var gif_query ='https://api.riffsy.com/v1/search?tag='+lbl+'&key=LIVDSRZULELA';
-      //   $.ajax({
-      //     type:'GET',
-      //     url: gif_query,
-      //     success: function(data) {
-      //       $('#primary').append( 
-      //         '<img src="'+data.results[0].media[0].gif.url+'" />'+
-      //         '<p>'+lbl+'</p>'
-      //       );
-      //       console.log(data.results[0].media[0].gif.url);
-      //     }
-      //   });
-      // };
-
       var add_to_DOM = function (lbl) {
-       get_GIF(lbl, function(url) {
-         $('#primary').append(
-           '<img src="'+url+'" />'+
-           '<p>'+lbl+'</p>'
-         )
-       });
+        get_GIF(lbl, function(url) {
+          $('#primary').append(
+            '<img src="'+url+'" />'+
+            '<p>'+lbl+'</p>'
+          )
+        });
       };
 
       var get_GIF = function(lbl, get_GIF_url) {
