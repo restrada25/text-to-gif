@@ -34,7 +34,7 @@ $.noConflict();
       }); 
 
       var add_to_DOM = function (lbl) {
-        get_GIF(lbl, function(url) {
+        get_GIF(lbl, function(url) { //This anonymous function handles URL
           $('#primary').append(
             '<img src="'+url+'" />'+
             '<p>'+lbl+'</p>'
@@ -49,13 +49,11 @@ $.noConflict();
           type: 'GET',
           url: gif_query,
           success: function(data) {
-            var GIF_url = data.data.images.original.url;
-            get_GIF_url(GIF_url);
+            var GIF_url = data.data.images.original.url; //Get the URL of the GIF
+            get_GIF_url(GIF_url); //Handle the URL
           }
         });
       }
-
-
 
       e.preventDefault();
     });
