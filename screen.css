@@ -21,7 +21,6 @@ img {
   max-width: 100%;
 }
 
-label,
-input {
+label {
   display: block;
 }
