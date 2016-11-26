@@ -70,3 +70,57 @@ li {
   color: #1A1A1A;
   font-weight: 500;
 }
+
+/* 600px @ 16px/em*/
+/* Based on an 8 column grid with 16px gutters*/
+@media screen and (min-width: 37.5em) {
+  #page {
+    padding-left: 14.833333%;
+    padding-right: 14.833333%;
+  }
+}
+
+/* 840px @ 16px/em*/
+/* Based on a 12 column grid with 24px gutters*/
+@media screen and (min-width: 52.5em) {
+  #page {
+    padding-left: 19.04761905%;
+    padding-right: 19.04761905%;
+  }
+}
+
+/* 960px @ 16px/em*/
+/* Based on a 12 column grid with 24px gutters*/
+/*@media screen and (min-width: 60em) {
+  #page {
+    padding-left: 26.875%;
+    padding-right: 26.875%;
+  }
+}*/
+
+/* 1024px @ 16px/em*/
+/* Based on a 12 column grid with 24px gutters*/
+/*@media screen and (min-width: 52.5em) {
+  #page {
+    padding-left: 19.04761905%;
+    padding-right: 19.04761905%;
+  }
+}*/
+
+/* 1440px @ 16px/em*/
+/* Based on a 12 column grid with 24px gutters*/
+@media screen and (min-width: 90em) {
+  #page {
+    padding-left: 26.25%;
+    padding-right: 26.25%;
+  }
+}
+
+/* 1920px @ 16px/em*/
+/* Based on a 12 column grid with 24px gutters*/
+/*@media screen and (min-width: 120em) {
+  #page {
+    padding-left: 34.1666666667%;
+    padding-right: 34.1666666667%;
+  }
+}*/
