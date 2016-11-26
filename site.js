@@ -38,7 +38,7 @@ $.noConflict();
           $('#primary').append(
             '<li>'+
             ' <img src="'+url+'" />'+
-            ' <p>'+lbl+'</p>'+
+            ' <p class="label">'+lbl+'</p>'+
             '</li>'
           )
         });
