@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" class="nojs">
   <head>
-    <title>Project 3</title>
+    <title>Text to GIFs</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,shrink-to-fit=no" />
+    <meta name="theme-color" content="#1A1A1A" />
     <link rel="stylesheet" media="screen" href="screen.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet" />
   </head>
   <body>
     <div id="page">
@@ -14,9 +16,14 @@
       <main id="content">
         <article id="controls">
           <form id="uc-form" name="uc-form" method="get" action="#null">
-            <label for="uc-text">Enter text to classify</label>
-            <input type="text" id="uc-text" name="uc-text" />
-            <input type="submit" id="uc-submit" name="uc-submit" value="Classify" />
+            <label for="uc-text">
+              <p>
+                At 'Text to GIF' you can enter any piece of text you want and we'll convert 
+                the most important words into a GIF. 
+              </p>
+            </label>
+            <textarea type="text" id="uc-text" name="uc-text" placeholder="Type anything you want"></textarea>
+            <input type="submit" id="uc-submit" name="uc-submit" value="Get GIFs" />
           </form>
         </article>
         <article>

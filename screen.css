@@ -9,6 +9,9 @@ a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,c
 html {
   font-size: 1.125em; /* 18px / 16px */
   line-height: 1.222em; /* 22px / 18px */
+  background-color: #1A1A1A;
+  color: #D64F2C;
+  font-family: "Roboto", Helvetica, sans-serif;
 }
 
 h1 {
@@ -16,11 +19,41 @@ h1 {
   line-height: 1.1em; /* 55px / 50.02px (2.5 gridlines) */
 }
 
-img {
-  display: block;
-  max-width: 100%;
+#page {
+  padding: 1.222em; /*One gridline*/
 }
 
-label {
+img {
   display: block;
+  width: 100%;
+}
+
+label,
+input,
+textarea {
+  display: block;
+  width: 100%;
+  font-family : inherit;
+  font-size: 100%;
+  padding: 0; 
+  border: 0;
+  -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
+     -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
+          box-sizing: border-box;
+}
+
+#uc-text {
+  height: 4.16666667em; /*75px / 18px = 4.16666667em*/
+  margin-top: 0.6111111111em; /*11px*/
+  border: 2px solid #FCE2B4;
+  background: #FCE2B4;
+  resize: none;
+}
+
+#uc-submit {
+  font-size: 2em; /*36px / 18px = 2em*/
+  height: 2.083333333em; /*75px / 36px = 2.083333333em*/
+  max-height: 2.083333333em; /*75px / 36px = 2.083333333em*/
+  margin: 0.30555555555em 0 0.30555555555em 0; /*11px / 36px = 0.30555555555em*/
+  background: #D64F2C;
 }
