@@ -36,8 +36,10 @@ $.noConflict();
       var add_to_DOM = function (lbl) {
         get_GIF(lbl, function(url) { //This anonymous function handles URL
           $('#primary').append(
-            '<img src="'+url+'" />'+
-            '<p>'+lbl+'</p>'
+            '<li>'+
+            ' <img src="'+url+'" />'+
+            ' <p>'+lbl+'</p>'+
+            '</li>'
           )
         });
       };
