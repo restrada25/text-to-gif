@@ -54,6 +54,19 @@ textarea {
   font-size: 2em; /*36px / 18px = 2em*/
   height: 2.083333333em; /*75px / 36px = 2.083333333em*/
   max-height: 2.083333333em; /*75px / 36px = 2.083333333em*/
-  margin: 0.30555555555em 0 0.30555555555em 0; /*11px / 36px = 0.30555555555em*/
+  margin-top: 0.30555555555em; /*11px / 36px = 0.30555555555em*/
   background: #D64F2C;
+}
+
+li {
+  margin-top: 1.22222em; /*One gridline*/
+  padding-bottom: 0.5em; /*11px Half of a gridline*/
+  background: #D64F2C;
+}
+
+.label {
+  padding-top: 0.6111111em; /*11px Half of a gridline*/
+  padding-left: 1em; /*11px Half of a gridline*/
+  color: #1A1A1A;
+  font-weight: 500;
 }
