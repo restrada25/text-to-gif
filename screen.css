@@ -62,6 +62,11 @@ textarea {
   font-weight: 500;
 }
 
+#loading {
+  text-align: center;
+  padding-top: 0.6111111em; /*11px Half of a gridline*/ 
+}
+
 li {
   margin-top: 1.22222em; /*One gridline*/
   padding-bottom: 0.5em; /*11px Half of a gridline*/
