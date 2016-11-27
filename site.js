@@ -61,6 +61,13 @@ $.noConflict();
 
         e.preventDefault();
       });
+      
+      $(document).keypress(function(e) {
+        if(e.which == 13) {
+          $('#uc-form').submit();
+        }
+      });
+      
     });
 })(jQuery);
 
