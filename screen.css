@@ -17,6 +17,8 @@ html {
 h1 {
   font-size: 2.779em; /* 50.02px / 18px */
   line-height: 1.1em; /* 55px / 50.02px (2.5 gridlines) */
+  text-align: center;
+  font-weight: 500;
 }
 
 #page {
@@ -35,8 +37,9 @@ textarea {
   width: 100%;
   font-family : inherit;
   font-size: 100%;
-  padding: 0; 
+  padding: 0;
   border: 0;
+  -webkit-appearance: none;
   -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
      -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
           box-sizing: border-box;
@@ -56,6 +59,12 @@ textarea {
   max-height: 2.083333333em; /*75px / 36px = 2.083333333em*/
   margin-top: 0.30555555555em; /*11px / 36px = 0.30555555555em*/
   background: #D64F2C;
+  font-weight: 500;
+}
+
+#loading {
+  text-align: center;
+  padding-top: 0.6111111em; /*11px Half of a gridline*/ 
 }
 
 li {
