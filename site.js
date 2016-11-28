@@ -21,7 +21,12 @@ $.noConflict();
             $("#sent").empty(); //Empties out the #sent list
             var type = data.sentiment.type;
             var score = data.sentiment.score;
-            add_sent_to_DOM(type, score);
+            if(text.length>0){
+              add_sent_to_DOM(type, score);
+            }
+            else {
+              $("#sent").empty();
+            }
           }
         });
 
@@ -51,12 +56,22 @@ $.noConflict();
 
         var add_sent_to_DOM = function (t, s) {
           get_GIF(t, function(url) { //This anonymous function handles URL
-            $('#sent').append(
-              '<li>'+
-              ' <img src="'+url+'" />'+
-              ' <p class="label">The sentiment of the text is '+(Math.abs(s*100))+'% '+t+'</p>'+
-              '</li>'
-            );
+            if(s==0){
+              $('#sent').append(
+                '<li>'+
+                ' <img src="'+url+'" />'+
+                ' <p class="label">The text is '+t+'</p>'+
+                '</li>'
+              );
+            }
+            else {
+              $('#sent').append(
+                '<li>'+
+                ' <img src="'+url+'" />'+
+                ' <p class="label">The text is '+(Math.abs(s*100))+'% '+t+'</p>'+
+                '</li>'
+              );
+            }
           });
         };
 
