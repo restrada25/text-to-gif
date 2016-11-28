@@ -21,11 +21,12 @@ $.noConflict();
             $("#sent").empty(); //Empties out the #sent list
             var type = data.sentiment.type;
             var score = data.sentiment.score;
-            $('#sent').append(
-              '<li>'+
-              '<p class="label">'+type+score+'</p>'+
-              '</li>'
-            )
+            add_sent_to_DOM(type);
+            // $('#sent').append(
+            //   '<li>'+
+            //   '<p class="label">'+type+score+'</p>'+
+            //   '</li>'
+            // )
           }
         });
 
@@ -53,6 +54,17 @@ $.noConflict();
             }
         });
 
+        var add_sent_to_DOM = function (t) {
+          get_GIF(t, function(url) { //This anonymous function handles URL
+            $('#sent').append(
+              '<li>'+
+              ' <img src="'+url+'" />'+
+              ' <p class="label">'+t+'</p>'+
+              '</li>'
+            );
+          });
+        };
+
         var add_to_DOM = function (lbl) {
           get_GIF(lbl, function(url) { //This anonymous function handles URL
             $('#primary').append(
@@ -60,7 +72,7 @@ $.noConflict();
               ' <img src="'+url+'" />'+
               ' <p class="label">'+lbl+'</p>'+
               '</li>'
-            )
+            );
           });
         };
 
