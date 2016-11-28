@@ -5,15 +5,61 @@
 $.noConflict();
 (function($) {
   $(document).ready(function() {
-      $('#uc-form').on('submit', function(e) {
-        $('#loading').empty();
-        $('#loading').append('Loading...');
-        var tkn = '68b2621e05c8479086e984a98ea8e716'; //This is the Dandelion token
-        var text = ($('#uc-text').val()).replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");//Gets text & deletes punctuation
-        text = text.replace(/ /g, "%20");//Replaces spaces with %20
-        var sentQuery = 'https://api.dandelion.eu/datatxt/sent/v1/?text='+text+'&token='+tkn+'&lang=en';
-        var primaQuery = 'https://api.dandelion.eu/datatxt/nex/v1/?text='+text+'&token='+tkn+'&lang=en';
+    $('#uc-form').on('submit', function(e) {
+      $('#loading').empty();
+      $('#loading').append('Loading...');
+      var tkn = '68b2621e05c8479086e984a98ea8e716'; //This is the Dandelion token
+      var text = ($('#uc-text').val()).replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");//Gets text & deletes punctuation
+      text = text.replace(/ /g, "%20");//Replaces spaces with %20
+      var sentQuery = 'https://api.dandelion.eu/datatxt/sent/v1/?text='+text+'&token='+tkn+'&lang=en';
+      var primaQuery = 'https://api.dandelion.eu/datatxt/nex/v1/?text='+text+'&token='+tkn+'&lang=en';
+        
+      var add_sent_to_DOM = function (t, s) {
+        get_GIF(t, function(url) { //This anonymous function handles URL
+          if(s==0){
+            $('#sent').append(
+              '<li>'+
+              ' <img src="'+url+'" />'+
+              ' <p class="label">The text is '+t+'</p>'+
+              '</li>'
+            );
+          }
+          else {
+            $('#sent').append(
+              '<li>'+
+              ' <img src="'+url+'" />'+
+              ' <p class="label">The text is '+(Math.abs(s*100))+'% '+t+'</p>'+
+              '</li>'
+            );
+          }
+        });
+      };
 
+      var add_to_DOM = function (lbl) {
+        get_GIF(lbl, function(url) { //This anonymous function handles URL
+          $('#primary').append(
+            '<li>'+
+            ' <img src="'+url+'" />'+
+            ' <p class="label">'+lbl+'</p>'+
+            '</li>'
+          );
+        });
+      };
+
+      var get_GIF = function(lbl, get_GIF_url) {
+        lbl = lbl.replace(/ /g, "+"); //Replaces spaces with +
+        var gif_query = 'https://api.giphy.com/v1/gifs/translate?s='+lbl+'&api_key=dc6zaTOxFJmzC';
+        $.ajax({
+          type: 'GET',
+          url: gif_query,
+          success: function(data) {
+            var GIF_url = data.data.images.original.url; //Get the URL of the GIF
+            get_GIF_url(GIF_url); //Handle the URL
+          }
+        });
+      }
+
+      if(text.length > 0) { //Only if there is some text, do get requests
         $.ajax({
           type: 'GET',
           url: sentQuery,
@@ -21,12 +67,7 @@ $.noConflict();
             $("#sent").empty(); //Empties out the #sent list
             var type = data.sentiment.type;
             var score = data.sentiment.score;
-            if(text.length>0){
-              add_sent_to_DOM(type, score);
-            }
-            else {
-              $("#sent").empty();
-            }
+            add_sent_to_DOM(type, score);
           }
         });
 
@@ -34,7 +75,7 @@ $.noConflict();
           type: 'GET',
           url: primaQuery,
           success: function(data) {
-              $("#primary").empty(); //Empties out the #primary list
+            $("#primary").empty(); //Empties out the #primary list
               var res_length = data.annotations.length; //Gets the length of the annotations
               if(res_length > 0) {
                 var label; //Temp_location of labels
@@ -53,61 +94,22 @@ $.noConflict();
               $('#loading').empty();
             }
         });
-
-        var add_sent_to_DOM = function (t, s) {
-          get_GIF(t, function(url) { //This anonymous function handles URL
-            if(s==0){
-              $('#sent').append(
-                '<li>'+
-                ' <img src="'+url+'" />'+
-                ' <p class="label">The text is '+t+'</p>'+
-                '</li>'
-              );
-            }
-            else {
-              $('#sent').append(
-                '<li>'+
-                ' <img src="'+url+'" />'+
-                ' <p class="label">The text is '+(Math.abs(s*100))+'% '+t+'</p>'+
-                '</li>'
-              );
-            }
-          });
-        };
-
-        var add_to_DOM = function (lbl) {
-          get_GIF(lbl, function(url) { //This anonymous function handles URL
-            $('#primary').append(
-              '<li>'+
-              ' <img src="'+url+'" />'+
-              ' <p class="label">'+lbl+'</p>'+
-              '</li>'
-            );
-          });
-        };
-
-        var get_GIF = function(lbl, get_GIF_url) {
-          lbl = lbl.replace(/ /g, "+"); //Replaces spaces with +
-          var gif_query = 'https://api.giphy.com/v1/gifs/translate?s='+lbl+'&api_key=dc6zaTOxFJmzC';
-          $.ajax({
-            type: 'GET',
-            url: gif_query,
-            success: function(data) {
-              var GIF_url = data.data.images.original.url; //Get the URL of the GIF
-              get_GIF_url(GIF_url); //Handle the URL
-            }
-          });
-        }
-
+      }
+      else {
+        add_to_DOM('Sorry, nothing');
+        $('#loading').empty();
         e.preventDefault();
-      });
-      
-      $(document).keypress(function(e) {
-        if(e.which == 13) {
-          $('#uc-form').submit();
-        }
-      });
-      
+      }
+
+      e.preventDefault();
     });
+      
+    $(document).keypress(function(e) {
+      if(e.which == 13) {
+        $('#uc-form').submit();
+      }
+    });
+      
+  });
 })(jQuery);
 
