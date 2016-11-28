@@ -81,11 +81,8 @@ li {
 }
 
 footer {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 0.6111111em; /*11px Half of a gridline*/
+  padding-bottom: 1.22222222em; 
+  padding-top: 1.1363636364em; /*25px*/
   text-align: center;
 }
 
