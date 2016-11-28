@@ -6,6 +6,7 @@ $.noConflict();
 (function($) {
   $(document).ready(function() {
       $('#uc-form').on('submit', function(e) {
+        $('#loading').empty();
         $('#loading').append('Loading...');
         var tkn = '68b2621e05c8479086e984a98ea8e716'; //This is the Dandelion token
         var text = ($('#uc-text').val()).replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");//Gets text & deletes punctuation
