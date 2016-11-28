@@ -96,6 +96,8 @@ $.noConflict();
         });
       }
       else {
+        $("#sent").empty(); //Empties out the #sent list
+        $("#primary").empty(); //Empties out the #primary list
         add_to_DOM('Sorry, nothing');
         $('#loading').empty();
         e.preventDefault();
