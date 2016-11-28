@@ -48,13 +48,27 @@ $.noConflict();
 
       var get_GIF = function(lbl, get_GIF_url) {
         lbl = lbl.replace(/ /g, "+"); //Replaces spaces with +
-        var gif_query = 'https://api.giphy.com/v1/gifs/translate?s='+lbl+'&api_key=dc6zaTOxFJmzC';
+        var gif_search_query='http://api.giphy.com/v1/gifs/search?q='+lbl+'&api_key=dc6zaTOxFJmzC';
+        var gif_translate_query = 'https://api.giphy.com/v1/gifs/translate?s='+lbl+'&api_key=dc6zaTOxFJmzC';
         $.ajax({
           type: 'GET',
-          url: gif_query,
+          url: gif_search_query, //Using search query first
           success: function(data) {
-            var GIF_url = data.data.images.original.url; //Get the URL of the GIF
-            get_GIF_url(GIF_url); //Handle the URL
+            var num_gifs = data.pagination.count;
+            if(num_gifs > 0) {
+              var GIF_url = data.data[Math.round(Math.random()*(num_gifs))].images.original.url; //Get the URL of the GIF
+              get_GIF_url(GIF_url); //Handle the URL
+            }
+            else {
+              $.ajax({
+                type: 'GET',
+                url: gif_translate_query, //Using translate query as backup
+                success: function(data) {
+                  var GIF_url = data.data.images.original.url; //Get the URL of the GIF
+                  get_GIF_url(GIF_url); //Handle the URL
+                }
+              });
+            }
           }
         });
       }
