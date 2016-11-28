@@ -64,7 +64,7 @@ textarea {
 
 #loading {
   text-align: center;
-  padding-top: 0.6111111em; /*11px Half of a gridline*/ 
+  padding-top: 0.6111111em; /*11px Half of a gridline*/
 }
 
 li {
@@ -78,6 +78,15 @@ li {
   padding-left: 1em; /*11px Half of a gridline*/
   color: #1A1A1A;
   font-weight: 500;
+}
+
+footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0.6111111em; /*11px Half of a gridline*/
+  text-align: center;
 }
 
 /* 600px @ 16px/em*/
