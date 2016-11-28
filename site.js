@@ -28,7 +28,7 @@ $.noConflict();
             $('#sent').append(
               '<li>'+
               ' <img src="'+url+'" />'+
-              ' <p class="label">The text is '+(Math.abs(s*100))+'% '+t+'</p>'+
+              ' <p class="label">The text is '+(Math.round(Math.abs(s*100)))+'% '+t+'</p>'+
               '</li>'
             );
           }
