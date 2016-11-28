@@ -21,7 +21,12 @@ $.noConflict();
             $("#sent").empty(); //Empties out the #sent list
             var type = data.sentiment.type;
             var score = data.sentiment.score;
-            add_sent_to_DOM(type, score);
+            if(text.length>0){
+              add_sent_to_DOM(type, score);
+            }
+            else {
+              $("#sent").empty();
+            }
           }
         });
 
