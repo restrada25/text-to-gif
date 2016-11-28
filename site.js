@@ -48,7 +48,7 @@ $.noConflict();
 
       var get_GIF = function(lbl, get_GIF_url) {
         lbl = lbl.replace(/ /g, "+"); //Replaces spaces with +
-        var gif_search_query='http://api.giphy.com/v1/gifs/search?q='+lbl+'&api_key=dc6zaTOxFJmzC';
+        var gif_search_query='https://api.giphy.com/v1/gifs/search?q='+lbl+'&api_key=dc6zaTOxFJmzC';
         var gif_translate_query = 'https://api.giphy.com/v1/gifs/translate?s='+lbl+'&api_key=dc6zaTOxFJmzC';
         $.ajax({
           type: 'GET',
