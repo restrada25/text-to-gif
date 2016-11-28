@@ -1,0 +1,26 @@
+{
+  "root": true, // don't look further up the directory tree for any more eslint rules
+  "extends": "eslint:recommended", // load basic eslint rules
+  "env": {
+    "browser": true, // for browser testing
+    "jquery": true // with jQuery, if used
+  },
+  "rules": {
+    "comma-dangle": ["error", "never"], // no trailing commas
+    "no-console": 0, // allow use of console calls
+    "indent": ["error", 2], // indent by two spaces
+    "curly": 2, // always use curly braces around blocks
+    "consistent-return": 1, // always `return` from functions
+    "eqeqeq": 2, // always test for type, !== and ===
+    "use-isnan": 1, // require use of isNaN in comparisons
+    "valid-typeof": 1, // typeof compared against a valid string
+    "no-loop-func": 2, // no function declarations inside loops
+    "no-redeclare": 1, // don't allow the same variable to be declared again
+    "vars-on-top": 1, // declare variables at the top of function scope
+    "no-undef": 1, // all variables must be declared with var
+    "no-unused-vars": 1, // all variables must also be used
+    "camelcase": 1, // use camelCase names
+    "comma-spacing": ["error", { "before": false, "after": true }], // spaces before commas
+    "semi-spacing": ["error", {"before": false, "after": true}] // no spaces before semicolons
+  }
+}
