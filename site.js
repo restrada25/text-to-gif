@@ -11,12 +11,29 @@ $.noConflict();
         var tkn = '68b2621e05c8479086e984a98ea8e716'; //This is the Dandelion token
         var text = ($('#uc-text').val()).replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");//Gets text & deletes punctuation
         text = text.replace(/ /g, "%20");//Replaces spaces with %20
-        var query = 'https://api.dandelion.eu/datatxt/nex/v1/?text='+text+'&token='+tkn+'&lang=en';
+        var sentQuery = 'https://api.dandelion.eu/datatxt/sent/v1/?text='+text+'&token='+tkn+'&lang=en';
+        var primaQuery = 'https://api.dandelion.eu/datatxt/nex/v1/?text='+text+'&token='+tkn+'&lang=en';
+
         $.ajax({
           type: 'GET',
-          url: query,
+          url: sentQuery,
           success: function(data) {
-              $("#primary").empty(); //Empties out the #primary article
+            $("#sent").empty(); //Empties out the #sent list
+            var type = data.sentiment.type;
+            var score = data.sentiment.score;
+            $('#sent').append(
+              '<li>'+
+              '<p class="label">'+type+score+'</p>'+
+              '</li>'
+            )
+          }
+        });
+
+        $.ajax({
+          type: 'GET',
+          url: primaQuery,
+          success: function(data) {
+              $("#primary").empty(); //Empties out the #primary list
               var res_length = data.annotations.length; //Gets the length of the annotations
               if(res_length > 0) {
                 var label; //Temp_location of labels
