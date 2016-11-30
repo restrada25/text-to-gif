@@ -61,14 +61,14 @@ $.noConflict();
       addSentToDom = function (t, s) {
         getGIF(t, function(url) { //This anonymous function handles URL
           if(s !== 0){
-            t = 'The text is ' + (Math.round(Math.abs(s*100))) + '% '+ t;
+            t = (Math.round(Math.abs(s*100))) + '% '+ t;
           }
           $('#sent').append(
             '<li>'+
             ' <figure>'+
-            '  <img src="'+url+'" />'+
+            '  <img src="'+url+'" alt="The text is '+t+'" />'+
             '   <figcaption>'+
-            '    <p class="label">The text is '+t+'</p>'+
+            '    <p class="label"> The text is '+t+'</p>'+
             '   </figcaption>'+
             '</figure>'+
             '</li>'
@@ -80,8 +80,12 @@ $.noConflict();
         getGIF(lbl, function(url) { //This anonymous function handles URL
           $('#primary').append(
             '<li>'+
-            ' <img src="'+url+'" />'+
-            ' <p class="label">'+lbl+'</p>'+
+            ' <figure>'+
+            '  <img src="'+url+'" alt="GIF of '+lbl+'" />'+
+            '   <figcaption>'+
+            '    <p class="label">'+lbl+'</p>'+
+            '   </figcaption>'+
+            '</figure>'+
             '</li>'
           );
         });
