@@ -1,17 +1,16 @@
 //Dandelion API docs https://dandelion.eu/docs/api/
 //Giphy API docs https://github.com/Giphy/GiphyAPI#giphy-sticker-api
-//GIF API docs https://api.riffsy.com/#start
 
 $.noConflict();
 (function($) {
   $(document).ready(function() {
+    var getSent, getCat, addSentToDom, addCatToDom, getGIF;
     var tkn, text, sentQuery, primaQuery;
-    var addSentToDom, addToDom, getGIF;
-    var GIFSearchQuery, GIFTranslateQuery;
-    var GIFUrl;
+    var GIFSearchQuery, GIFTranslateQuery, GIFUrl;
     var type, score;
     var responseLength;
     var label, labelsSeen, i;
+    
     $('#uc-form').on('submit', function(e) {
       $('#loading').empty();
       $('#loading').append('Loading...');
@@ -20,6 +19,44 @@ $.noConflict();
       sentQuery = 'https://api.dandelion.eu/datatxt/sent/v1/?text='+text+'&token='+tkn+'&lang=en';
       primaQuery = 'https://api.dandelion.eu/datatxt/nex/v1/?text='+text+'&token='+tkn+'&lang=en';
       text = text.replace(/ /g, "%20");//Replaces spaces with %20
+      
+      getSent = function() { //Gets the sentiment of text
+        $.ajax({
+          type: 'GET',
+          url: sentQuery,
+          success: function(data) {
+            $("#sent").empty(); //Empties out the #sent list
+            type = data.sentiment.type;
+            score = data.sentiment.score;
+            addSentToDom(type, score);
+          }
+        });
+      }
+      
+      getCat = function() {
+        $.ajax({
+          type: 'GET',
+          url: primaQuery,
+          success: function(data) {
+            $("#primary").empty(); //Empties out the #primary list
+            responseLength = data.annotations.length; //Gets the length of the annotations
+            if(responseLength > 0) {
+              labelsSeen = {}; //Labels seen
+              for(i=0; i<responseLength; i++) {
+                label = data.annotations[i].label; //Storing next available label
+                if(!labelsSeen.hasOwnProperty(label)) { //Check if the label has already been seen
+                  addCatToDom(label); //Add tags and GIFs to the DOM
+                  labelsSeen[label] = 1; //Marks label as seen
+                }
+              }
+            }
+            else {
+              addCatToDom('Sorry, nothing');
+            }
+            $('#loading').empty();
+          }
+        });
+      }
         
       addSentToDom = function (t, s) {
         getGIF(t, function(url) { //This anonymous function handles URL
@@ -42,7 +79,7 @@ $.noConflict();
         });
       };
 
-      addToDom = function (lbl) {
+      addCatToDom = function (lbl) {
         getGIF(lbl, function(url) { //This anonymous function handles URL
           $('#primary').append(
             '<li>'+
@@ -80,46 +117,14 @@ $.noConflict();
         });
       };
 
-      if(text.length > 0) { //Only if there is some text, do get requests
-        $.ajax({
-          type: 'GET',
-          url: sentQuery,
-          success: function(data) {
-            $("#sent").empty(); //Empties out the #sent list
-            type = data.sentiment.type;
-            score = data.sentiment.score;
-            addSentToDom(type, score);
-          }
-        });
-
-        $.ajax({
-          type: 'GET',
-          url: primaQuery,
-          success: function(data) {
-            $("#primary").empty(); //Empties out the #primary list
-            responseLength = data.annotations.length; //Gets the length of the annotations
-            if(responseLength > 0) {
-              label; //Temp_location of labels
-              labelsSeen = {}; //Labels seen
-              for(i=0; i<responseLength; i++) {
-                label = data.annotations[i].label; //Storing next available label
-                if(!labelsSeen.hasOwnProperty(label)) { //Check if the label has already been seen
-                  addToDom(label); //Add tags and GIFs to the DOM
-                  labelsSeen[label] = 1; //Marks label as seen
-                }
-              }
-            }
-            else {
-              addToDom('Sorry, nothing');
-            }
-            $('#loading').empty();
-          }
-        });
+      if(text.length > 0) { //Only if there is some text, do get requests  
+        getSent();
+        getCat();
       }
       else {
         $("#sent").empty(); //Empties out the #sent list
         $("#primary").empty(); //Empties out the #primary list
-        addToDom('Sorry, nothing');
+        addCatToDom('Sorry, nothing');
         $('#loading').empty();
         e.preventDefault();
       }
