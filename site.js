@@ -11,8 +11,7 @@ $.noConflict();
     var GIFUrl;
     var type, score;
     var responseLength;
-    var label, u;
-    var i;
+    var label, labelsSeen, i;
     $('#uc-form').on('submit', function(e) {
       $('#loading').empty();
       $('#loading').append('Loading...');
@@ -101,12 +100,12 @@ $.noConflict();
             responseLength = data.annotations.length; //Gets the length of the annotations
             if(responseLength > 0) {
               label; //Temp_location of labels
-              u = {}; //Labels seen
+              labelsSeen = {}; //Labels seen
               for(i=0; i<responseLength; i++) {
                 label = data.annotations[i].label; //Storing next available label
-                if(!u.hasOwnProperty(label)) { //Check if the label has already been seen
+                if(!labelsSeen.hasOwnProperty(label)) { //Check if the label has already been seen
                   addToDom(label); //Add tags and GIFs to the DOM
-                  u[label] = 1; //Marks label as seen
+                  labelsSeen[label] = 1; //Marks label as seen
                 }
               }
             }
