@@ -35,20 +35,20 @@ input,
 textarea {
   display: block;
   width: 100%;
-  font-family : inherit;
+  font-family: inherit;
   font-size: 100%;
   padding: 0;
   border: 0;
   -webkit-appearance: none;
   -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
-     -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
-          box-sizing: border-box;
+  -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
+  box-sizing: border-box;
 }
 
 #uc-text {
   height: 4.16666667em; /*75px / 18px = 4.16666667em*/
   margin-top: 0.6111111111em; /*11px*/
-  border: 2px solid #FCE2B4;
+  border: 0.1111111111em solid #FCE2B4;
   background: #FCE2B4;
   resize: none;
 }
@@ -81,7 +81,7 @@ li {
 }
 
 footer {
-  padding-bottom: 1.22222222em; 
+  padding-bottom: 1.22222222em;
   padding-top: 1.1363636364em; /*25px*/
   text-align: center;
 }
@@ -104,24 +104,6 @@ footer {
   }
 }
 
-/* 960px @ 16px/em*/
-/* Based on a 12 column grid with 24px gutters*/
-/*@media screen and (min-width: 60em) {
-  #page {
-    padding-left: 26.875%;
-    padding-right: 26.875%;
-  }
-}*/
-
-/* 1024px @ 16px/em*/
-/* Based on a 12 column grid with 24px gutters*/
-/*@media screen and (min-width: 52.5em) {
-  #page {
-    padding-left: 19.04761905%;
-    padding-right: 19.04761905%;
-  }
-}*/
-
 /* 1440px @ 16px/em*/
 /* Based on a 12 column grid with 24px gutters*/
 @media screen and (min-width: 90em) {
@@ -131,11 +113,3 @@ footer {
   }
 }
 
-/* 1920px @ 16px/em*/
-/* Based on a 12 column grid with 24px gutters*/
-/*@media screen and (min-width: 120em) {
-  #page {
-    padding-left: 34.1666666667%;
-    padding-right: 34.1666666667%;
-  }
-}*/
