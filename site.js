@@ -5,18 +5,26 @@
 $.noConflict();
 (function($) {
   $(document).ready(function() {
+    var tkn, text, sentQuery, primaQuery;
+    var addSentToDom, addToDom, getGIF;
+    var GIFSearchQuery, GIFTranslateQuery;
+    var GIFUrl;
+    var type, score;
+    var responseLength;
+    var label, u;
+    var i;
     $('#uc-form').on('submit', function(e) {
       $('#loading').empty();
       $('#loading').append('Loading...');
-      var tkn = '68b2621e05c8479086e984a98ea8e716'; //This is the Dandelion token
-      var text = ($('#uc-text').val()).replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");//Gets text & deletes punctuation
+      tkn = '68b2621e05c8479086e984a98ea8e716'; //This is the Dandelion token
+      text = ($('#uc-text').val()).replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");//Gets text & deletes punctuation
+      sentQuery = 'https://api.dandelion.eu/datatxt/sent/v1/?text='+text+'&token='+tkn+'&lang=en';
+      primaQuery = 'https://api.dandelion.eu/datatxt/nex/v1/?text='+text+'&token='+tkn+'&lang=en';
       text = text.replace(/ /g, "%20");//Replaces spaces with %20
-      var sentQuery = 'https://api.dandelion.eu/datatxt/sent/v1/?text='+text+'&token='+tkn+'&lang=en';
-      var primaQuery = 'https://api.dandelion.eu/datatxt/nex/v1/?text='+text+'&token='+tkn+'&lang=en';
         
-      var add_sent_to_DOM = function (t, s) {
-        get_GIF(t, function(url) { //This anonymous function handles URL
-          if(s==0){
+      addSentToDom = function (t, s) {
+        getGIF(t, function(url) { //This anonymous function handles URL
+          if(s==='0'){
             $('#sent').append(
               '<li>'+
               ' <img src="'+url+'" />'+
@@ -35,8 +43,8 @@ $.noConflict();
         });
       };
 
-      var add_to_DOM = function (lbl) {
-        get_GIF(lbl, function(url) { //This anonymous function handles URL
+      addToDom = function (lbl) {
+        getGIF(lbl, function(url) { //This anonymous function handles URL
           $('#primary').append(
             '<li>'+
             ' <img src="'+url+'" />'+
@@ -46,32 +54,32 @@ $.noConflict();
         });
       };
 
-      var get_GIF = function(lbl, get_GIF_url) {
+      getGIF = function(lbl, getGIFURL) {
         lbl = lbl.replace(/ /g, "+"); //Replaces spaces with +
-        var gif_search_query='https://api.giphy.com/v1/gifs/search?q='+lbl+'&api_key=dc6zaTOxFJmzC';
-        var gif_translate_query = 'https://api.giphy.com/v1/gifs/translate?s='+lbl+'&api_key=dc6zaTOxFJmzC';
+        GIFSearchQuery='https://api.giphy.com/v1/gifs/search?q='+lbl+'&api_key=dc6zaTOxFJmzC';
+        GIFTranslateQuery = 'https://api.giphy.com/v1/gifs/translate?s='+lbl+'&api_key=dc6zaTOxFJmzC';
         $.ajax({
           type: 'GET',
-          url: gif_search_query, //Using search query first
+          url: GIFSearchQuery, //Using search query first
           success: function(data) {
-            var num_gifs = data.pagination.count;
-            if(num_gifs > 0) {
-              var GIF_url = data.data[Math.round(Math.random()*(num_gifs))].images.original.url; //Get the URL of the GIF
-              get_GIF_url(GIF_url); //Handle the URL
+            var numGIFs = data.pagination.count;
+            if(numGIFs > 0) {
+              GIFUrl = data.data[Math.round(Math.random()*(numGIFs))].images.original.url; //Get the URL of the GIF
+              getGIFURL(GIFUrl); //Handle the URL
             }
             else {
               $.ajax({
                 type: 'GET',
-                url: gif_translate_query, //Using translate query as backup
+                url: GIFTranslateQuery, //Using translate query as backup
                 success: function(data) {
-                  var GIF_url = data.data.images.original.url; //Get the URL of the GIF
-                  get_GIF_url(GIF_url); //Handle the URL
+                  var GIFUrl = data.data.images.original.url; //Get the URL of the GIF
+                  getGIFURL(GIFUrl); //Handle the URL
                 }
               });
             }
           }
         });
-      }
+      };
 
       if(text.length > 0) { //Only if there is some text, do get requests
         $.ajax({
@@ -79,9 +87,9 @@ $.noConflict();
           url: sentQuery,
           success: function(data) {
             $("#sent").empty(); //Empties out the #sent list
-            var type = data.sentiment.type;
-            var score = data.sentiment.score;
-            add_sent_to_DOM(type, score);
+            type = data.sentiment.type;
+            score = data.sentiment.score;
+            addSentToDom(type, score);
           }
         });
 
@@ -90,29 +98,29 @@ $.noConflict();
           url: primaQuery,
           success: function(data) {
             $("#primary").empty(); //Empties out the #primary list
-              var res_length = data.annotations.length; //Gets the length of the annotations
-              if(res_length > 0) {
-                var label; //Temp_location of labels
-                var u = {}; //Labels seen
-                for(var i=0;i<res_length;i++) {
-                  label = data.annotations[i].label; //Storing next available label
-                  if(!u.hasOwnProperty(label)) { //Check if the label has already been seen
-                    add_to_DOM(label); //Add tags and GIFs to the DOM
-                    u[label] = 1; //Marks label as seen
-                  }
+            responseLength = data.annotations.length; //Gets the length of the annotations
+            if(responseLength > 0) {
+              label; //Temp_location of labels
+              u = {}; //Labels seen
+              for(i=0; i<responseLength; i++) {
+                label = data.annotations[i].label; //Storing next available label
+                if(!u.hasOwnProperty(label)) { //Check if the label has already been seen
+                  addToDom(label); //Add tags and GIFs to the DOM
+                  u[label] = 1; //Marks label as seen
                 }
               }
-              else {
-                add_to_DOM('Sorry, nothing');
-              }
-              $('#loading').empty();
             }
+            else {
+              addToDom('Sorry, nothing');
+            }
+            $('#loading').empty();
+          }
         });
       }
       else {
         $("#sent").empty(); //Empties out the #sent list
         $("#primary").empty(); //Empties out the #primary list
-        add_to_DOM('Sorry, nothing');
+        addToDom('Sorry, nothing');
         $('#loading').empty();
         e.preventDefault();
       }
@@ -121,7 +129,7 @@ $.noConflict();
     });
       
     $(document).keypress(function(e) {
-      if(e.which == 13) {
+      if(e.which === 13) {
         $('#uc-form').submit();
       }
     });
