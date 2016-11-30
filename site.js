@@ -60,22 +60,19 @@ $.noConflict();
         
       addSentToDom = function (t, s) {
         getGIF(t, function(url) { //This anonymous function handles URL
-          if(s==='0'){
-            $('#sent').append(
-              '<li>'+
-              ' <img src="'+url+'" />'+
-              ' <p class="label">The text is '+t+'</p>'+
-              '</li>'
-            );
+          if(s !== 0){
+            t = 'The text is ' + (Math.round(Math.abs(s*100))) + '% '+ t;
           }
-          else {
-            $('#sent').append(
-              '<li>'+
-              ' <img src="'+url+'" />'+
-              ' <p class="label">The text is '+(Math.round(Math.abs(s*100)))+'% '+t+'</p>'+
-              '</li>'
-            );
-          }
+          $('#sent').append(
+            '<li>'+
+            ' <figure>'+
+            '  <img src="'+url+'" />'+
+            '   <figcaption>'+
+            '    <p class="label">The text is '+t+'</p>'+
+            '   </figcaption>'+
+            '</figure>'+
+            '</li>'
+          );
         });
       };
 
@@ -117,7 +114,7 @@ $.noConflict();
         });
       };
 
-      if(text.length > 0) { //Only if there is some text, do get requests  
+      if(text.length > 0) { //Only if there is some text, do get requests
         getSent();
         getCat();
       }
