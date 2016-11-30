@@ -26,14 +26,14 @@ $.noConflict();
           url: sentQuery,
           success: function(data) {
             $("#sent").empty(); //Empties out the #sent list
-            type = data.sentiment.type;
-            score = data.sentiment.score;
-            addSentToDom(type, score);
+            type = data.sentiment.type; //Get either positive, negative of neutral
+            score = data.sentiment.score; //Get score of sentiment
+            addSentToDom(type, score); //Add the sentiment and the GIF to DOM
           }
         });
       }
       
-      getCat = function() {
+      getCat = function() { //Gets categories/entities from text
         $.ajax({
           type: 'GET',
           url: primaQuery,
@@ -45,20 +45,20 @@ $.noConflict();
               for(i=0; i<responseLength; i++) {
                 label = data.annotations[i].label; //Storing next available label
                 if(!labelsSeen.hasOwnProperty(label)) { //Check if the label has already been seen
-                  addCatToDom(label); //Add tags and GIFs to the DOM
+                  addCatToDom(label); //Add categories/labels and GIFs to the DOM
                   labelsSeen[label] = 1; //Marks label as seen
                 }
               }
             }
             else {
-              addCatToDom('Sorry, nothing');
+              addCatToDom('Sorry, nothing'); //Tell user nothing was found
             }
-            $('#loading').empty();
+            $('#loading').empty(); //Empty the loading text
           }
         });
       }
         
-      addSentToDom = function (t, s) {
+      addSentToDom = function (t, s) { //Add the GIF img and sentiment
         getGIF(t, function(url) { //This anonymous function handles URL
           if(s !== 0){
             t = (Math.round(Math.abs(s*100))) + '% '+ t;
@@ -76,7 +76,7 @@ $.noConflict();
         });
       };
 
-      addCatToDom = function (lbl) {
+      addCatToDom = function (lbl) { //Adds the categories/entities and GIF to DOM
         getGIF(lbl, function(url) { //This anonymous function handles URL
           $('#primary').append(
             '<li>'+
@@ -91,7 +91,7 @@ $.noConflict();
         });
       };
 
-      getGIF = function(lbl, getGIFURL) {
+      getGIF = function(lbl, getGIFURL) { //Searches Giphy for a GIF
         lbl = lbl.replace(/ /g, "+"); //Replaces spaces with +
         GIFSearchQuery='https://api.giphy.com/v1/gifs/search?q='+lbl+'&api_key=dc6zaTOxFJmzC';
         GIFTranslateQuery = 'https://api.giphy.com/v1/gifs/translate?s='+lbl+'&api_key=dc6zaTOxFJmzC';
@@ -99,7 +99,7 @@ $.noConflict();
           type: 'GET',
           url: GIFSearchQuery, //Using search query first
           success: function(data) {
-            var numGIFs = data.pagination.count;
+            var numGIFs = data.pagination.count; //Get amount of GIFs returned
             if(numGIFs > 0) {
               GIFUrl = data.data[Math.round(Math.random()*(numGIFs))].images.original.url; //Get the URL of the GIF
               getGIFURL(GIFUrl); //Handle the URL
@@ -125,20 +125,19 @@ $.noConflict();
       else {
         $("#sent").empty(); //Empties out the #sent list
         $("#primary").empty(); //Empties out the #primary list
-        addCatToDom('Sorry, nothing');
-        $('#loading').empty();
+        addCatToDom('Sorry, nothing'); //Tells user nothing was found
+        $('#loading').empty(); //Empties loading text
         e.preventDefault();
       }
 
       e.preventDefault();
     });
       
-    $(document).keypress(function(e) {
+    $(document).keypress(function(e) { //If user presses Enter key, submit form
       if(e.which === 13) {
         $('#uc-form').submit();
       }
     });
-      
   });
 })(jQuery);
 
