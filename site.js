@@ -21,48 +21,46 @@ $.noConflict();
       text = text.replace(/ /g, "%20");//Replaces spaces with %20
       
       getSent = function() { //Gets the sentiment of text
-        $.when($.ajax({
+        $.ajax({
           type: 'GET',
-          url: sentQuery
-        })).then(handleSent);
-      };
-      
-      handleSent = function(data) {
-        $("#sent").empty(); //Empties out the #sent list
-        type = data.sentiment.type; //Get either positive, negative of neutral
-        score = data.sentiment.score; //Get score of sentiment
-        addSentToDom(type, score); //Add the sentiment and the GIF to DOM
-      };
+          url: sentQuery,
+          success: function(data) {
+            $("#sent").empty(); //Empties out the #sent list
+            type = data.sentiment.type; //Get either positive, negative of neutral
+            score = data.sentiment.score; //Get score of sentiment
+            addSentToDom(type, score); //Add the sentiment and the GIF to DOM
+          }
+        });
+      }
       
       getCat = function() { //Gets categories/entities from text
         $.ajax({
           type: 'GET',
-          url: primaQuery
-        }).then(handleCat);
-      }
-      
-      handleCat = function(data){
-        $("#primary").empty(); //Empties out the #primary list
-        responseLength = data.annotations.length; //Gets the length of the annotations
-        if(responseLength > 0) {
-          labelsSeen = {}; //Labels seen
-          for(i=0; i<responseLength; i++) {
-            label = data.annotations[i].label; //Storing next available label
-            if(!labelsSeen.hasOwnProperty(label)) { //Check if the label has already been seen
-              addCatToDom(label); //Add categories/labels and GIFs to the DOM
-              labelsSeen[label] = 1; //Marks label as seen
+          url: primaQuery,
+          success: function(data) {
+            $("#primary").empty(); //Empties out the #primary list
+            responseLength = data.annotations.length; //Gets the length of the annotations
+            if(responseLength > 0) {
+              labelsSeen = {}; //Labels seen
+              for(i=0; i<responseLength; i++) {
+                label = data.annotations[i].label; //Storing next available label
+                if(!labelsSeen.hasOwnProperty(label)) { //Check if the label has already been seen
+                  addCatToDom(label); //Add categories/labels and GIFs to the DOM
+                  labelsSeen[label] = 1; //Marks label as seen
+                }
+              }
             }
+            else {
+              addCatToDom('Sorry, nothing'); //Tell user nothing was found
+            }
+            $('#loading').empty(); //Empty the loading text
           }
-        }
-        else {
-          addCatToDom('Sorry, nothing'); //Tell user nothing was found
-        }
-        $('#loading').empty(); //Empty the loading text
-      };
+        });
+      }
         
       addSentToDom = function (t, s) { //Add the GIF img and sentiment
         getGIF(t, function(url) { //This anonymous function handles URL
-          if(s !== 0) {
+          if(s !== 0){
             t = (Math.round(Math.abs(s*100))) + '% '+ t;
           }
           $('#sent').append(
