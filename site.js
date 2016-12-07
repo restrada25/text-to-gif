@@ -24,7 +24,7 @@ $.noConflict();
         $.when($.ajax({
           type: 'GET',
           url: sentQuery
-        })).then(handleSent,failure);
+        })).then(handleSent, failure);
       };
       
       handleSent = function(data) {
@@ -38,7 +38,7 @@ $.noConflict();
         $.when($.ajax({
           type: 'GET',
           url: primaQuery
-        })).then(handleCat,failure);
+        })).then(handleCat, failure);
       }
       
       handleCat = function(data){
@@ -98,8 +98,8 @@ $.noConflict();
         GIFSearchQuery='https://api.giphy.com/v1/gifs/search?q='+lbl+'&api_key=dc6zaTOxFJmzC';
         $.when($.ajax({
           type: 'GET',
-          url: GIFSearchQuery, //Using search query first
-        })).then(function (data) { handleGIF (data, lbl, getGIFURL)},failure);
+          url: GIFSearchQuery //Using search query first
+        })).then(function (data) { handleGIF (data, lbl, getGIFURL)}, failure);
       };
 
       handleGIF = function(data, lbl, getGIFURL) {
@@ -117,8 +117,8 @@ $.noConflict();
         GIFTranslateQuery = 'https://api.giphy.com/v1/gifs/translate?s='+lbl+'&api_key=dc6zaTOxFJmzC';
         $when($.ajax({
           type: 'GET',
-          url: GIFTranslateQuery, //Using translate query as backup
-        })).then(function (data) { handleTransGIF (data, lbl, getGIFURL)},failure);
+          url: GIFTranslateQuery //Using translate query as backup
+        })).then(function (data) { handleTransGIF (data, lbl, getGIFURL)}, failure);
       }
 
       handleTransGIF = function (data, lbl, getGIFURL) {
