@@ -152,4 +152,3 @@ $.noConflict();
     });
   });
 })(jQuery);
-
