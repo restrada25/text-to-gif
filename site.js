@@ -24,7 +24,7 @@ $.noConflict();
         $.when($.ajax({
           type: 'GET',
           url: sentQuery
-        })).then(handleSent);
+        })).then(handleSent,failure);
       };
       
       handleSent = function(data) {
@@ -35,10 +35,10 @@ $.noConflict();
       };
       
       getCat = function() { //Gets categories/entities from text
-        $.ajax({
+        $.when($.ajax({
           type: 'GET',
           url: primaQuery
-        }).then(handleCat);
+        })).then(handleCat,failure);
       }
       
       handleCat = function(data){
@@ -96,29 +96,39 @@ $.noConflict();
       getGIF = function(lbl, getGIFURL) { //Searches Giphy for a GIF
         lbl = lbl.replace(/ /g, "+"); //Replaces spaces with +
         GIFSearchQuery='https://api.giphy.com/v1/gifs/search?q='+lbl+'&api_key=dc6zaTOxFJmzC';
-        GIFTranslateQuery = 'https://api.giphy.com/v1/gifs/translate?s='+lbl+'&api_key=dc6zaTOxFJmzC';
-        $.ajax({
+        $.when($.ajax({
           type: 'GET',
           url: GIFSearchQuery, //Using search query first
-          success: function(data) {
-            var numGIFs = data.pagination.count; //Get amount of GIFs returned
-            if(numGIFs > 0) {
-              GIFUrl = data.data[Math.round(Math.random()*(numGIFs))].images.original.url; //Get the URL of the GIF
-              getGIFURL(GIFUrl); //Handle the URL
-            }
-            else {
-              $.ajax({
-                type: 'GET',
-                url: GIFTranslateQuery, //Using translate query as backup
-                success: function(data) {
-                  var GIFUrl = data.data.images.original.url; //Get the URL of the GIF
-                  getGIFURL(GIFUrl); //Handle the URL
-                }
-              });
-            }
-          }
-        });
+        })).then(function (data) { handleGIF (data, lbl, getGIFURL)},failure);
       };
+
+      handleGIF = function(data, lbl, getGIFURL) {
+        var numGIFs = data.pagination.count; //Get amount of GIFs returned
+        if(numGIFs > 0) {
+          GIFUrl = data.data[Math.round(Math.random()*(numGIFs))].images.original.url; //Get the URL of the GIF
+          getGIFURL(GIFUrl); //Handle the URL
+        }
+        else {
+          getTransGIF(lbl, getGIFURL);
+        }
+      }
+
+      getTransGIF = function (lbl, getGIFURL) {
+        GIFTranslateQuery = 'https://api.giphy.com/v1/gifs/translate?s='+lbl+'&api_key=dc6zaTOxFJmzC';
+        $when($.ajax({
+          type: 'GET',
+          url: GIFTranslateQuery, //Using translate query as backup
+        })).then(function (data) { handleTransGIF (data, lbl, getGIFURL)},failure);
+      }
+
+      handleTransGIF = function (data, lbl, getGIFURL) {
+        var GIFUrl = data.data.images.original.url; //Get the URL of the GIF
+        getGIFURL(GIFUrl); //Handle the URL
+      }
+
+      failure = function() {
+        alert('Something went wrong');
+      }
 
       if(text.length > 0) { //Only if there is some text, do get requests
         getSent();
@@ -142,4 +152,3 @@ $.noConflict();
     });
   });
 })(jQuery);
-
