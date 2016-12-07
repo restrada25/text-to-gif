@@ -21,46 +21,48 @@ $.noConflict();
       text = text.replace(/ /g, "%20");//Replaces spaces with %20
       
       getSent = function() { //Gets the sentiment of text
-        $.ajax({
+        $.when($.ajax({
           type: 'GET',
-          url: sentQuery,
-          success: function(data) {
-            $("#sent").empty(); //Empties out the #sent list
-            type = data.sentiment.type; //Get either positive, negative of neutral
-            score = data.sentiment.score; //Get score of sentiment
-            addSentToDom(type, score); //Add the sentiment and the GIF to DOM
-          }
-        });
-      }
+          url: sentQuery
+        })).then(handleSent, failure);
+      };
+      
+      handleSent = function(data) {
+        $("#sent").empty(); //Empties out the #sent list
+        type = data.sentiment.type; //Get either positive, negative of neutral
+        score = data.sentiment.score; //Get score of sentiment
+        addSentToDom(type, score); //Add the sentiment and the GIF to DOM
+      };
       
       getCat = function() { //Gets categories/entities from text
-        $.ajax({
+        $.when($.ajax({
           type: 'GET',
-          url: primaQuery,
-          success: function(data) {
-            $("#primary").empty(); //Empties out the #primary list
-            responseLength = data.annotations.length; //Gets the length of the annotations
-            if(responseLength > 0) {
-              labelsSeen = {}; //Labels seen
-              for(i=0; i<responseLength; i++) {
-                label = data.annotations[i].label; //Storing next available label
-                if(!labelsSeen.hasOwnProperty(label)) { //Check if the label has already been seen
-                  addCatToDom(label); //Add categories/labels and GIFs to the DOM
-                  labelsSeen[label] = 1; //Marks label as seen
-                }
-              }
-            }
-            else {
-              addCatToDom('Sorry, nothing'); //Tell user nothing was found
-            }
-            $('#loading').empty(); //Empty the loading text
-          }
-        });
+          url: primaQuery
+        })).then(handleCat, failure);
       }
+      
+      handleCat = function(data){
+        $("#primary").empty(); //Empties out the #primary list
+        responseLength = data.annotations.length; //Gets the length of the annotations
+        if(responseLength > 0) {
+          labelsSeen = {}; //Labels seen
+          for(i=0; i<responseLength; i++) {
+            label = data.annotations[i].label; //Storing next available label
+            if(!labelsSeen.hasOwnProperty(label)) { //Check if the label has already been seen
+              addCatToDom(label); //Add categories/labels and GIFs to the DOM
+              labelsSeen[label] = 1; //Marks label as seen
+            }
+          }
+        }
+        else {
+          addCatToDom('Sorry, nothing'); //Tell user nothing was found
+        }
+        $('#loading').empty(); //Empty the loading text
+      };
         
       addSentToDom = function (t, s) { //Add the GIF img and sentiment
         getGIF(t, function(url) { //This anonymous function handles URL
-          if(s !== 0){
+          if(s !== 0) {
             t = (Math.round(Math.abs(s*100))) + '% '+ t;
           }
           $('#sent').append(
@@ -94,29 +96,39 @@ $.noConflict();
       getGIF = function(lbl, getGIFURL) { //Searches Giphy for a GIF
         lbl = lbl.replace(/ /g, "+"); //Replaces spaces with +
         GIFSearchQuery='https://api.giphy.com/v1/gifs/search?q='+lbl+'&api_key=dc6zaTOxFJmzC';
-        GIFTranslateQuery = 'https://api.giphy.com/v1/gifs/translate?s='+lbl+'&api_key=dc6zaTOxFJmzC';
-        $.ajax({
+        $.when($.ajax({
           type: 'GET',
-          url: GIFSearchQuery, //Using search query first
-          success: function(data) {
-            var numGIFs = data.pagination.count; //Get amount of GIFs returned
-            if(numGIFs > 0) {
-              GIFUrl = data.data[Math.round(Math.random()*(numGIFs))].images.original.url; //Get the URL of the GIF
-              getGIFURL(GIFUrl); //Handle the URL
-            }
-            else {
-              $.ajax({
-                type: 'GET',
-                url: GIFTranslateQuery, //Using translate query as backup
-                success: function(data) {
-                  var GIFUrl = data.data.images.original.url; //Get the URL of the GIF
-                  getGIFURL(GIFUrl); //Handle the URL
-                }
-              });
-            }
-          }
-        });
+          url: GIFSearchQuery //Using search query first
+        })).then(function (data) { handleGIF (data, lbl, getGIFURL)}, failure);
       };
+
+      handleGIF = function(data, lbl, getGIFURL) {
+        var numGIFs = data.pagination.count; //Get amount of GIFs returned
+        if(numGIFs > 0) {
+          GIFUrl = data.data[Math.round(Math.random()*(numGIFs))].images.original.url; //Get the URL of the GIF
+          getGIFURL(GIFUrl); //Handle the URL
+        }
+        else {
+          getTransGIF(lbl, getGIFURL);
+        }
+      }
+
+      getTransGIF = function (lbl, getGIFURL) {
+        GIFTranslateQuery = 'https://api.giphy.com/v1/gifs/translate?s='+lbl+'&api_key=dc6zaTOxFJmzC';
+        $when($.ajax({
+          type: 'GET',
+          url: GIFTranslateQuery //Using translate query as backup
+        })).then(function (data) { handleTransGIF (data, lbl, getGIFURL)}, failure);
+      }
+
+      handleTransGIF = function (data, lbl, getGIFURL) {
+        var GIFUrl = data.data.images.original.url; //Get the URL of the GIF
+        getGIFURL(GIFUrl); //Handle the URL
+      }
+
+      failure = function() {
+        alert('Something went wrong');
+      }
 
       if(text.length > 0) { //Only if there is some text, do get requests
         getSent();
@@ -140,4 +152,3 @@ $.noConflict();
     });
   });
 })(jQuery);
-
