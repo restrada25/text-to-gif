@@ -24,7 +24,7 @@ $.noConflict();
         $.when($.ajax({
           type: 'GET',
           url: sentQuery
-        })).then(handleSent);
+        })).then(handleSent,failure);
       };
       
       handleSent = function(data) {
@@ -35,10 +35,10 @@ $.noConflict();
       };
       
       getCat = function() { //Gets categories/entities from text
-        $.ajax({
+        $.when($.ajax({
           type: 'GET',
           url: primaQuery
-        }).then(handleCat);
+        })).then(handleCat,failure);
       }
       
       handleCat = function(data){
@@ -119,6 +119,10 @@ $.noConflict();
           }
         });
       };
+
+      failure = function() {
+        console.log('Something went wrong');
+      }
 
       if(text.length > 0) { //Only if there is some text, do get requests
         getSent();
