@@ -9,9 +9,10 @@ a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,c
 html {
   font-size: 1.125em; /* 18px / 16px */
   line-height: 1.222em; /* 22px / 18px */
-  background-color: #1A1A1A;
-  color: #D64F2C;
-  font-family: "Roboto", Helvetica, sans-serif;
+  background-color: #02a8b2;
+  color:  #37003C;
+  font-family: "Helvetica Neue", Helvetica, sans-serif;
+  font-weight: 500;
 }
 
 h1 {
@@ -48,9 +49,10 @@ textarea {
 #uc-text {
   height: 4.16666667em; /*75px / 18px = 4.16666667em*/
   margin-top: 0.6111111111em; /*11px*/
-  border: 0.1111111111em solid #FCE2B4;
-  background: #FCE2B4;
+  border: 0.33333333em solid #fafafa;
+  background: #fafafa;
   resize: none;
+  color: #37003C;
 }
 
 #uc-submit {
@@ -58,7 +60,8 @@ textarea {
   height: 2.083333333em; /*75px / 36px = 2.083333333em*/
   max-height: 2.083333333em; /*75px / 36px = 2.083333333em*/
   margin-top: 0.30555555555em; /*11px / 36px = 0.30555555555em*/
-  background: #D64F2C;
+  background: #37003C;
+  color: #00FE87;
   font-weight: 500;
 }
 
@@ -70,13 +73,13 @@ textarea {
 li {
   margin-top: 1.22222em; /*One gridline*/
   padding-bottom: 0.5em; /*11px Half of a gridline*/
-  background: #D64F2C;
+  background: #37003C;
 }
 
 .label {
   padding-top: 0.6111111em; /*11px Half of a gridline*/
   padding-left: 1em; /*11px Half of a gridline*/
-  color: #1A1A1A;
+  color: #00FE87;
   font-weight: 500;
 }
 
