@@ -1,13 +1,12 @@
-# project3
-Files for itmd-361 project 3
+# Text To GIF
+## Website Description
+At 'Text to GIFs' you can enter any piece of text and we'll 
+convert the sentiment (positive or negative) and most important words into a GIF. 
 
-## Daniel Vega (@danielve4)
-One of my strengths is that I have worked with a REST API prior to this course and have parsed JSON.
-In addition, I get along with along with my partner well.
+We recommend using _at least_ 3 senteces in order to get some acceptable results.
 
-## Ruben Estrada (@restrada25)
-I am able to git
+We encourage you to copy and paste content of news articles as they'll contain
+words that are most likely to be converted into GIFs.
 
-## Website Description:
-
->At 'Text to GIFs' you can enter any piece of text you want and we'll convert the sentiment and most important words into a GIF. Recommended size of text is at least 3 sentences
+## Creators
+[Daniel Vega](http://daniel-vega.com/) and [Ruben Estrada](http://estrada-ruben.com/)
