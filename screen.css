@@ -93,6 +93,20 @@ footer {
   padding-top: 0.8125em;
   text-align: center;
 }
+
+#top {
+  position: relative;
+  border-radius: 50%;
+  height: 75px;
+  width: 75px;
+  line-height: 75px;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  background-color: #37003C;
+  color: #00FE87;
+}
+
 .b-top {
    visibility: hidden;
 }
