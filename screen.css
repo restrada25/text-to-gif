@@ -70,6 +70,29 @@ textarea {
   font-weight: 600;
 }
 
+.helper-button {
+  margin-top: 0.5909090909em; /*13px / 22px*/
+  height: 2.272727273em; /*75px / 22px*/
+  width: 40vw;
+  line-height: 2.272727273em;
+  text-align: center;
+  text-decoration: none;
+  background-color: #37003C;
+  color: #00FE87;
+}
+
+#example {
+  float: left;
+}
+
+#clear {
+  float: right;
+}
+
+#helpers {
+  padding-bottom: 2.363636364em; /*Two gridlines*/
+}
+
 #loading {
   text-align: center;
   padding-top: 0.590909090909em; /*13px Half of a gridline*/
@@ -92,6 +115,7 @@ li {
   font-size: 0.7272727273em; /*18px / 22px*/
   padding-top: 0.8125em;
   text-align: center;
+  clear: both;
 }
 
 .footer.lower {
@@ -139,6 +163,10 @@ li {
     padding-left: 14.833333%;
     padding-right: 14.833333%;
   }
+
+  .helper-button {
+    width: 32.6666667vw;
+  }
 }
 
 /* 840px @ 16px/em*/
@@ -148,6 +176,10 @@ li {
     padding-left: 19.04761905%;
     padding-right: 19.04761905%;
   }
+
+  .helper-button {
+    width: 28.45238095vw;
+  }
 }
 
 /* 1440px @ 16px/em*/
@@ -156,6 +188,10 @@ li {
   #page {
     padding-left: 26.25%;
     padding-right: 26.25%;
+  }
+
+  .helper-button {
+    width: 21.25vw;
   }
 }
 
