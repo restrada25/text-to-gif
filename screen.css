@@ -121,7 +121,7 @@ li {
 }
 
 .b-top {
-   visibility: hidden;
+  visibility: hidden;
 }
 
 .b-top.visible {
