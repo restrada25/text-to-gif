@@ -93,6 +93,13 @@ footer {
   padding-top: 0.8125em;
   text-align: center;
 }
+.b-top {
+   visibility: hidden;
+}
+
+.b-top.visible {
+  visibility: visible;
+}
 
 /* 600px @ 16px/em*/
 /* Based on an 8 column grid with 16px gutters*/
