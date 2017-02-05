@@ -152,7 +152,7 @@ $.noConflict();
 
     $(window).scroll(function () {
       $top = $('.b-top');
-      var offset = 300; //300 pixels
+      var offset = 600; //600 pixels
       ($(this).scrollTop() > offset ? $top.addClass('visible') : $top.removeClass('visible'));
     });
       

@@ -93,6 +93,23 @@ footer {
   padding-top: 0.8125em;
   text-align: center;
 }
+
+#top {
+  box-shadow: 0 0.1818181818em 0.3636363636em rgba(0,0,0,0.26);/*The shadow of the navigation bar 4px down, 8px blur radius*/
+  height: 3.409090909em; /*75px / 22px*/
+  width: 3.409090909em;
+  line-height: 3.409090909em;
+  position: fixed;
+  right: 2%;
+  bottom: 2%;
+  border-radius: 50%;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  background-color: #37003C;
+  color: #00FE87;
+}
+
 .b-top {
    visibility: hidden;
 }
