@@ -88,10 +88,14 @@ li {
   font-weight: 500;
 }
 
-footer {
+.footer {
   font-size: 0.7272727273em; /*18px / 22px*/
   padding-top: 0.8125em;
   text-align: center;
+}
+
+.footer.lower {
+  padding-top: 3.409090909em; /*75px/22px*/
 }
 
 #top { /*Styles for the back-to-top button*/
