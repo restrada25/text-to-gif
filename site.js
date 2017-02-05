@@ -20,29 +20,29 @@ $.noConflict();
       primaQuery = 'https://api.dandelion.eu/datatxt/nex/v1/?text='+text+'&token='+tkn+'&lang=en';
       text = text.replace(/ /g, "%20");//Replaces spaces with %20
       
-      getSent = function() { //Gets the sentiment of text
+      var getSent = function() { //Gets the sentiment of text
         $.when($.ajax({
           type: 'GET',
           url: sentQuery
         })).then(handleSent, failure);
       };
       
-      handleSent = function(data) {
-        $("#sent").empty(); //Empties out the #sent list
+      var handleSent = function(data) {
+        $('#sent').empty(); //Empties out the #sent list
         type = data.sentiment.type; //Get either positive, negative of neutral
         score = data.sentiment.score; //Get score of sentiment
         addSentToDom(type, score); //Add the sentiment and the GIF to DOM
       };
       
-      getCat = function() { //Gets categories/entities from text
+      var getCat = function() { //Gets categories/entities from text
         $.when($.ajax({
           type: 'GET',
           url: primaQuery
         })).then(handleCat, failure);
-      }
+      };
       
-      handleCat = function(data){
-        $("#primary").empty(); //Empties out the #primary list
+      var handleCat = function(data){
+        $('#primary').empty(); //Empties out the #primary list
         responseLength = data.annotations.length; //Gets the length of the annotations
         if(responseLength > 0) {
           labelsSeen = {}; //Labels seen
@@ -60,17 +60,17 @@ $.noConflict();
         $('#loading').empty(); //Empty the loading text
       };
         
-      addSentToDom = function (t, s) { //Add the GIF img and sentiment
-        getGIF(t, function(url) { //This anonymous function handles URL
-          if(s !== 0) {
-            t = (Math.round(Math.abs(s*100))) + '% '+ t;
+      var addSentToDom = function (type, score) { //Add the GIF img and sentiment
+        getGIF(type, function(url) { //This anonymous function handles URL
+          if(score !== 0) {
+            type = (Math.round(Math.abs(score*100))) + '% '+ type;
           }
           $('#sent').append(
             '<li>'+
             ' <figure>'+
-            '  <img src="'+url+'" alt="The text is '+t+'" />'+
+            '  <img src="'+url+'" alt="The text is '+type+'" />'+
             '   <figcaption>'+
-            '    <p class="label"> The text is '+t+'</p>'+
+            '    <p class="label"> The text is '+type+'</p>'+
             '   </figcaption>'+
             '</figure>'+
             '</li>'
@@ -78,14 +78,14 @@ $.noConflict();
         });
       };
 
-      addCatToDom = function (lbl) { //Adds the categories/entities and GIF to DOM
-        getGIF(lbl, function(url) { //This anonymous function handles URL
+      var addCatToDom = function (label) { //Adds the categories/entities and GIF to DOM
+        getGIF(label, function(url) { //This anonymous function handles URL
           $('#primary').append(
             '<li>'+
             ' <figure>'+
-            '  <img src="'+url+'" alt="GIF of '+lbl+'" />'+
+            '  <img src="'+url+'" alt="GIF of '+label+'" />'+
             '   <figcaption>'+
-            '    <p class="label">'+lbl+'</p>'+
+            '    <p class="label">'+label+'</p>'+
             '   </figcaption>'+
             '</figure>'+
             '</li>'
@@ -93,42 +93,42 @@ $.noConflict();
         });
       };
 
-      getGIF = function(lbl, getGIFURL) { //Searches Giphy for a GIF
-        lbl = lbl.replace(/ /g, "+"); //Replaces spaces with +
-        GIFSearchQuery='https://api.giphy.com/v1/gifs/search?q='+lbl+'&api_key=dc6zaTOxFJmzC';
+      var getGIF = function(label, getGIFURL) { //Searches Giphy for a GIF
+        label = label.replace(/ /g, "+"); //Replaces spaces with +
+        GIFSearchQuery='https://api.giphy.com/v1/gifs/search?q='+label+'&api_key=dc6zaTOxFJmzC';
         $.when($.ajax({
           type: 'GET',
           url: GIFSearchQuery //Using search query first
-        })).then(function (data) { handleGIF (data, lbl, getGIFURL)}, failure);
+        })).then(function (data) { handleGIF (data, label, getGIFURL)}, failure);
       };
 
-      handleGIF = function(data, lbl, getGIFURL) {
+      var handleGIF = function(data, label, getGIFURL) {
         var numGIFs = data.pagination.count; //Get amount of GIFs returned
         if(numGIFs > 0) {
           GIFUrl = data.data[Math.round(Math.random()*(numGIFs))].images.original.url; //Get the URL of the GIF
           getGIFURL(GIFUrl); //Handle the URL
         }
         else {
-          getTransGIF(lbl, getGIFURL);
+          getTransGIF(label, getGIFURL);
         }
-      }
+      };
 
-      getTransGIF = function (lbl, getGIFURL) {
-        GIFTranslateQuery = 'https://api.giphy.com/v1/gifs/translate?s='+lbl+'&api_key=dc6zaTOxFJmzC';
+      var getTransGIF = function (label, getGIFURL) {
+        GIFTranslateQuery = 'https://api.giphy.com/v1/gifs/translate?s='+label+'&api_key=dc6zaTOxFJmzC';
         $when($.ajax({
           type: 'GET',
           url: GIFTranslateQuery //Using translate query as backup
-        })).then(function (data) { handleTransGIF (data, lbl, getGIFURL)}, failure);
-      }
+        })).then(function (data) { handleTransGIF (data, label, getGIFURL)}, failure);
+      };
 
-      handleTransGIF = function (data, lbl, getGIFURL) {
+      var handleTransGIF = function (data, lbl, getGIFURL) {
         var GIFUrl = data.data.images.original.url; //Get the URL of the GIF
         getGIFURL(GIFUrl); //Handle the URL
-      }
+      };
 
-      failure = function() {
+      var failure = function() {
         alert('Something went wrong');
-      }
+      };
 
       if(text.length > 0) { //Only if there is some text, do get requests
         getSent();
@@ -143,6 +143,17 @@ $.noConflict();
       }
 
       e.preventDefault();
+    });
+
+    $('.b-top').on('click', function(e) {
+      e.preventDefault();
+      $('body,html').animate({scrollTop: 0},500);
+    });
+
+    $(window).scroll(function () {
+      $top = $('.b-top');
+      var offset = 300; //300 pixels
+      ($(this).scrollTop() > offset ? $top.addClass('visible') : $top.removeClass('visible'));
     });
       
     $(document).keypress(function(e) { //If user presses Enter key, submit form
