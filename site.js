@@ -145,15 +145,19 @@ $.noConflict();
       e.preventDefault();
     });
 
-    $('.b-top').on('click', function(e) {
+    $('.b-top').on('click', function(e) { //Handles the click/tap on the TOP button
       e.preventDefault();
-      $('body,html').animate({scrollTop: 0},500);
+      $('body,html').animate({scrollTop: 0},500); //Scrolls top the very top, 500 duration
     });
 
     $(window).scroll(function () {
       $top = $('.b-top');
       var offset = 600; //600 pixels
       ($(this).scrollTop() > offset ? $top.addClass('visible') : $top.removeClass('visible'));
+      /*
+      Adds the 'visible' class if scrolled 600 or more pixels, removes the class if not
+      Adds visible class so CSS can make it appear or disappear
+      */
     });
       
     $(document).keypress(function(e) { //If user presses Enter key, submit form
