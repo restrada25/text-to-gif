@@ -98,6 +98,12 @@ li {
   padding-top: 3.409090909em; /*75px/22px*/
 }
 
+.footer a {
+  text-decoration: none;
+  border-bottom: 0.1666667em solid; /*The underline of email and LinkedIn*/
+  color: #37003C;
+}
+
 #top { /*Styles for the back-to-top button*/
   box-shadow: 0 0.1818181818em 0.3636363636em rgba(0,0,0,0.26);/*The shadow of the navigation bar 4px down, 8px blur radius*/
   height: 3.409090909em; /*75px / 22px*/
