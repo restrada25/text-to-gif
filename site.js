@@ -14,6 +14,9 @@ $.noConflict();
     $('#uc-form').on('submit', function(e) {
       $('#loading').empty();
       $('#loading').append('Loading...');
+      $('body,html').animate({
+        scrollTop: $("#loading").offset().top
+      }, 500);
       tkn = '68b2621e05c8479086e984a98ea8e716'; //This is the Dandelion token
       text = ($('#uc-text').val()).replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");//Gets text & deletes punctuation
       sentQuery = 'https://api.dandelion.eu/datatxt/sent/v1/?text='+text+'&token='+tkn+'&lang=en';
