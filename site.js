@@ -152,8 +152,17 @@ $.noConflict();
 
     $(window).scroll(function () {
       $top = $('.b-top');
+      $foot = $('.footer');
       var offset = 600; //600 pixels
-      ($(this).scrollTop() > offset ? $top.addClass('visible') : $top.removeClass('visible'));
+
+      if($(this).scrollTop() > offset) {
+        $top.addClass('visible');
+        $foot.addClass('lower');
+      } else {
+        $top.removeClass('visible');
+        $foot.removeClass('lower');
+      }
+
       /*
       Adds the 'visible' class if scrolled 600 or more pixels, removes the class if not
       Adds visible class so CSS can make it appear or disappear
