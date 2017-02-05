@@ -21,7 +21,7 @@ $.noConflict();
       text = ($('#uc-text').val()).replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");//Gets text & deletes punctuation
       sentQuery = 'https://api.dandelion.eu/datatxt/sent/v1/?text='+text+'&token='+tkn+'&lang=en';
       primaQuery = 'https://api.dandelion.eu/datatxt/nex/v1/?text='+text+'&token='+tkn+'&lang=en';
-      text = text.replace(/ /g, "%20");//Replaces spaces with %20
+      //text = text.replace(/ /g, "%20");//Replaces spaces with %20
       
       var getSent = function() { //Gets the sentiment of text
         $.when($.ajax({
@@ -147,6 +147,16 @@ $.noConflict();
 
       e.preventDefault();
     });
+    
+    $('#example').on('click', function (e) {
+      e.preventDefault();
+
+    });
+
+    $('#clear').on('click', function (e) {
+      e.preventDefault();
+      $('#uc-text').val('');
+    });
 
     $('.b-top').on('click', function(e) { //Handles the click/tap on the TOP button
       e.preventDefault();
@@ -158,6 +168,10 @@ $.noConflict();
       $foot = $('.footer');
       var offset = 600; //600 pixels
 
+      /*
+       Adds the 'visible' class if scrolled 600 or more pixels, removes the class if not
+       Adds visible class so CSS can make it appear or disappear
+       */
       if($(this).scrollTop() > offset) {
         $top.addClass('visible');
         $foot.addClass('lower');
@@ -165,11 +179,6 @@ $.noConflict();
         $top.removeClass('visible');
         $foot.removeClass('lower');
       }
-
-      /*
-      Adds the 'visible' class if scrolled 600 or more pixels, removes the class if not
-      Adds visible class so CSS can make it appear or disappear
-      */
     });
       
     $(document).keypress(function(e) { //If user presses Enter key, submit form
